@@ -1,14 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "TankAimingComponent.h"
 
+#include "TankAimingComponent.h"
+#include "TankBarrel.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent() {
 	// ...
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet) {
+void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet) {
 	Barrel = BarrelToSet;
 }
 
@@ -16,7 +17,7 @@ void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	if (Barrel) {
 		FVector OutLaunchVelocity;
-		FVector StartLocation = Barrel->GetSocketLocation(FName("OutHole"));
+		FVector StartLocation = Barrel->GetSocketLocation(FName("InHole"));
 		if (UGameplayStatics::SuggestProjectileVelocity(
 			this,
 			OutLaunchVelocity,
@@ -27,12 +28,13 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 			0,
 			0,
 			ESuggestProjVelocityTraceOption::DoNotTrace
-		)){	//Found AimSolution and determined AimDirection. Next rotate barrel!		
+		)) {	//Found AimSolution and determined AimDirection. Next rotate barrel!		
 			FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
-			UE_LOG(LogTemp, Warning, TEXT("Barrel pointing at %s"), *AimDirection.ToString())
-			MoveBarrelTowards(AimDirection);
+			//UE_LOG(LogTemp, Warning, TEXT("Barrel pointing at %s"), *AimDirection.ToString())
+				MoveBarrelTowards(AimDirection);
 		}
-		else{
+		else {
+			UE_LOG(LogTemp, Error, TEXT("SomethingWrong AimingComponent AimAt()"))
 			//Do nothing for now.
 		}
 	}
@@ -44,6 +46,5 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
 	FRotator AimAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
-
-	UE_LOG(LogTemp, Warning, TEXT("Barrel pointing at %s"), *DeltaRotator.ToString())
+	Barrel->Elevate(5.f);
 }
