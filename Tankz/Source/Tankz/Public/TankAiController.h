@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Tank.h"
 #include "AIController.h"
-#include "Engine.h"
+#include "GameFramework/Actor.h"
 #include "TankAiController.generated.h"
 
 /**
