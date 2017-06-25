@@ -17,11 +17,15 @@ class TANKZ_API ATankAiController : public AAIController
 	GENERATED_BODY()
 
 public:
-	ATank * GetControlledTank() const;
-
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 
 private:
+	ATank * GetControlledTank() const;
 	ATank * GetPlayerTank() const;
+	void AimTowardsCrosshair();
 
+	ATank *  TargetTank;
+	UPROPERTY(EditAnywhere)
+		float RayTraceDistance = 1000000.f;
 };

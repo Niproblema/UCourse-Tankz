@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Tank.h"
 #include "GameFramework/PlayerController.h"
+#include "Engine.h"
 #include "TankPlayerController.generated.h" //Must be last include
 
 /**
@@ -29,4 +30,6 @@ private:
 		float CrosshairXShare = 0.5f;
 	UPROPERTY(EditAnywhere)
 		float CrosshairYShare = 0.4f;
+	UPROPERTY(EditAnywhere)
+		float RayTraceDistance = 1000000.f;
 };
