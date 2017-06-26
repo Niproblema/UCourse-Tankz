@@ -25,6 +25,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = Setup)
 		float MaxDegreeUP = 50;
 	UPROPERTY(EditAnywhere, Category = Setup)
-		float MaxDegreeDOWN= -1;
+		float MaxDegreeDOWN= -2;
 	
 };
