@@ -2,13 +2,14 @@
 
 #pragma once
 
-#include "TankAimingComponent.h"
 #include "CoreMinimal.h"
 #include "UObject/UObjectGlobals.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+//Forward declarations
 class UTankBarrel;
+class UTankAimingComponent;
 
 UCLASS()
 class TANKZ_API ATank : public APawn
@@ -29,13 +30,10 @@ protected:
 	UTankAimingComponent * TankAimingComponent = nullptr;
 
 private:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-		float LaunchSpeed = 90000.f; 
+		float LaunchSpeed = 80000.f; 
 	
 };

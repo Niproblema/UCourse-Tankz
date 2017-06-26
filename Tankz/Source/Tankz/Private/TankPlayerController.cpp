@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Tank.h"
 #include "TankPlayerController.h"
 
 
@@ -33,8 +34,7 @@ void ATankPlayerController::AimTowardsCrosshair() {
 	if (!GetControlledTank())return;
 	FVector TargetingForLocation; //OUT Parameter
 	if (GetSightRayHitLocation(TargetingForLocation)) {
-		GetControlledTank()->AimAt(TargetingForLocation);
-		
+		GetControlledTank()->AimAt(TargetingForLocation);		
 	}
 }
 
@@ -57,6 +57,10 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & OutHitLocation) con
 			return true;
 		}
 	}
+
+	//float Tajm = GetWorld()->GetTimeSeconds();
+	//UE_LOG(LogTemp, Warning, TEXT("%f: Player crosshair deprojection failed. Aiming at sky?"), Tajm);
+
 	OutHitLocation = FVector(0);
 	return false;
 }

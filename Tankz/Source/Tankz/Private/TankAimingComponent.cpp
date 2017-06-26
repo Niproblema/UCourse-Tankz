@@ -6,7 +6,7 @@
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent() {
-	// ...
+	//TODO Should this tick maybe?
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet) {
@@ -30,11 +30,16 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 			ESuggestProjVelocityTraceOption::DoNotTrace
 		)) {	//Found AimSolution and determined AimDirection. Next rotate barrel!		
 			FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
-			//UE_LOG(LogTemp, Warning, TEXT("Barrel pointing at %s"), *AimDirection.ToString())
-				MoveBarrelTowards(AimDirection);
+
+			//float Tajm = GetWorld()->GetTimeSeconds();
+			//UE_LOG(LogTemp, Warning, TEXT("%f: Barrel pointing at %s"), Tajm, *AimDirection.ToString());
+
+			MoveBarrelTowards(AimDirection);
 		}
 		else {
-			UE_LOG(LogTemp, Error, TEXT("SomethingWrong AimingComponent AimAt()"))
+			float Tajm = GetWorld()->GetTimeSeconds();
+			UE_LOG(LogTemp, Error, TEXT("%f: SomethingWrong AimingComponent AimAt()"), Tajm);
+
 			//Do nothing for now.
 		}
 	}
@@ -46,5 +51,5 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
 	FRotator AimAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
-	Barrel->Elevate(5.f);
+	Barrel->Elevate(DeltaRotator.Pitch);
 }
