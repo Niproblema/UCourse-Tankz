@@ -46,6 +46,11 @@ private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 		TSubclassOf<AProjectile> ProjectileBP;
 
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float ReloadTimeS = 3;
+	double LastFireTime = 0;
+
+
 	//Local TankBarrel reference for spawning projectiles
 	UTankBarrel * Barrel = nullptr;
 

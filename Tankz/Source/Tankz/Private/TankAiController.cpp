@@ -5,31 +5,17 @@
 
 void ATankAiController::BeginPlay() {
 	Super::BeginPlay();
-	ATank * ControlledTank = GetControlledTank();
-
-	if (ControlledTank) {
-		UE_LOG(LogTemp, Warning, TEXT("AiControler reporting from %s!"), *(ControlledTank->GetName()))
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("AiControler BeginPlay NO TANK CONTROLLED!"))
-	}
-
-	TargetTank = GetPlayerTank();
-	if (TargetTank) {
-		UE_LOG(LogTemp, Warning, TEXT("AiControler Found target %s!"), *(TargetTank->GetName()))
-	}else
-		UE_LOG(LogTemp, Warning, TEXT("AiControler No Target found!"))
+	TargetTank = GetPlayerTank(); //Sets original tank to player!
+	ControlledTank = GetControlledTank();
 }
 
 void ATankAiController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	AimTowardsCrosshair();
-}
 
-void ATankAiController::AimTowardsCrosshair() {
-	if (!GetControlledTank() || !TargetTank)return;
-	FVector TargetingForLocation = TargetTank->GetActorLocation();
-	GetControlledTank()->AimAt(TargetingForLocation);
+	if (!ControlledTank || !TargetTank)return;
+
+	ControlledTank->AimAt(TargetTank->GetActorLocation());
+	ControlledTank->Shoot();
 }
 
 ATank * ATankAiController::GetPlayerTank() const {

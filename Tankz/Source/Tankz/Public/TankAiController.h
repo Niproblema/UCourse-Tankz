@@ -21,9 +21,10 @@ public:
 private:
 	ATank * GetControlledTank() const;
 	ATank * GetPlayerTank() const;
-	void AimTowardsCrosshair();
 
 	ATank *  TargetTank;
+	ATank * ControlledTank;
+
 	UPROPERTY(EditAnywhere)
 		float RayTraceDistance = 1000000.f;
 };

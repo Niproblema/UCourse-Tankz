@@ -24,7 +24,7 @@ void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet) {
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	if (Barrel && Turret) {
 		FVector OutLaunchVelocity;
-		FVector StartLocation = Barrel->GetSocketLocation(FName("InHole"));
+		FVector StartLocation = Barrel->GetSocketLocation(FName("OutHole"));
 		if (UGameplayStatics::SuggestProjectileVelocity(
 			this,
 			OutLaunchVelocity,
