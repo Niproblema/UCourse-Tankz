@@ -11,16 +11,18 @@ UTankAimingComponent::UTankAimingComponent() {
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet) {
-	Barrel = BarrelToSet;
+	if (BarrelToSet)
+		Barrel = BarrelToSet;
 }
 
 void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet) {
-	Turret = TurretToSet;
+	if (TurretToSet)
+		Turret = TurretToSet;
 }
 
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
-	if (Barrel) {
+	if (Barrel && Turret) {
 		FVector OutLaunchVelocity;
 		FVector StartLocation = Barrel->GetSocketLocation(FName("InHole"));
 		if (UGameplayStatics::SuggestProjectileVelocity(

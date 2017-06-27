@@ -5,12 +5,14 @@
 #include "CoreMinimal.h"
 #include "UObject/UObjectGlobals.h"
 #include "GameFramework/Pawn.h"
+#include "Engine/World.h"
 #include "Tank.generated.h"
 
 //Forward declarations
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
+class AProjectile;
 
 UCLASS()
 class TANKZ_API ATank : public APawn
@@ -26,6 +28,8 @@ public:
 		void SetBarrelReference(UTankBarrel * BarrelToSet);
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		void SetTurretReference(UTankTurret * TurretToSet);
+	UFUNCTION(BlueprintCallable, Category = Setup)
+		void Shoot();
 
 protected:
 	// Called when the game starts or when spawned
@@ -38,5 +42,11 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float LaunchSpeed = 80000.f;
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+		TSubclassOf<AProjectile> ProjectileBP;
+
+	//Local TankBarrel reference for spawning projectiles
+	UTankBarrel * Barrel = nullptr;
 
 };
