@@ -49,7 +49,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & OutHitLocation) con
 			HitResult,
 			CameraPosition,
 			(CameraPosition + (WorldDirection * RayTraceDistance)),
-			ECollisionChannel::ECC_Visibility
+			ECollisionChannel::ECC_Camera
 		)){
 			OutHitLocation = HitResult.Location;
 			return true;
