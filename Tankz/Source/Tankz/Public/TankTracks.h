@@ -26,6 +26,8 @@ private:
 		float MaxSpeedPerS = 1400;
 	UPROPERTY(EditAnywhere, Category = Setup)
 		float MinSpeedPerS = -250;
-
+	//MaxForcePerTrack in newtons
+	UPROPERTY(EditAnywhere, Category = Setup)
+		float TrackMaxDrivingForce = 200000;
 
 };
