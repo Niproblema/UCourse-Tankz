@@ -14,8 +14,10 @@ void ATankAiController::Tick(float DeltaTime) {
 
 	if (!ControlledTank || !TargetTank)return;
 
+
+	MoveToActor(TargetTank, AcceptanceRadius);
 	ControlledTank->AimAt(TargetTank->GetActorLocation());
-	ControlledTank->Shoot();
+	//ControlledTank->Shoot();
 }
 
 ATank * ATankAiController::GetPlayerTank() const {

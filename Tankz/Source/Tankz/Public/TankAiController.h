@@ -27,4 +27,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		float RayTraceDistance = 1000000.f;
+
+	UPROPERTY(EditAnywhere)
+		float AcceptanceRadius = 1500;
 };

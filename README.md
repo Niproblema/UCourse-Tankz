@@ -10,5 +10,6 @@ Barrel depression based on turret rotation
 Barrel movement when shooting
 Turret currentSpeed
 Tank track turning physics, nut just hovering
+Inputs are stacking up
 AI looks for controllers other than just player.
 Skybox raytracing and moving turret.

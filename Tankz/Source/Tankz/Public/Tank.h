@@ -13,6 +13,7 @@ class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
 class AProjectile;
+class UTankMovementComponent;
 
 UCLASS()
 class TANKZ_API ATank : public APawn
@@ -36,6 +37,9 @@ protected:
 	virtual void BeginPlay() override;
 	UTankAimingComponent * TankAimingComponent = nullptr;
 
+	//UPROPERTY(BlueprintReadOnly)
+		//UTankMovementComponent * TankMovementComponent = nullptr;
+
 private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -49,7 +53,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 		TSubclassOf<AProjectile> ProjectileBP;
-	
+
 
 	//Local TankBarrel reference for spawning projectiles
 	UTankBarrel * Barrel = nullptr;
