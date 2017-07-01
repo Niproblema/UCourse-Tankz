@@ -10,17 +10,27 @@
 #include "GameFramework/Actor.h"
 #include "TankAimingComponent.generated.h"
 
+//Enums for crosshair colors
+
+UENUM()
+enum class EFiringState : uint8
+{
+	Reloading,
+	Aiming,
+	Locked
+};
+
 //Forward Declaration
 class UTankBarrel;
 class UTankTurret;
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class TANKZ_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
@@ -28,13 +38,15 @@ public:
 	void SetTurretReference(UTankTurret * TurretToSet);
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
-
-private:	
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = State)
+		EFiringState FiringState = EFiringState::Reloading;
+private:
 	void MoveBarrelTowards(FVector AimDirection);
 	void MoveTurretTowards(FVector AimDirection);
 
 	UTankBarrel * Barrel = nullptr;
 	UTankTurret * Turret = nullptr;
-		
-	
+
+
 };

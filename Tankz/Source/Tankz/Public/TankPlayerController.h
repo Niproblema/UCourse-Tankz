@@ -20,8 +20,12 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
+protected:
+	UFUNCTION(BlueprintCallable, Category = Setup)
+		ATank * GetControlledTank() const;
+
 private:
-	ATank * GetControlledTank() const;
+
 	void AimTowardsCrosshair(); //Aim so shot hits the crosshair location
 	bool GetSightRayHitLocation(FVector & HitLocation) const; //Raycast though the dot. If it hits, return true. Also OutParameter
 
