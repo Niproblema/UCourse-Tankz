@@ -10,15 +10,11 @@ UTankAimingComponent::UTankAimingComponent() {
 	//TODO Should this tick maybe?
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet) {
-	if (BarrelToSet)
-		Barrel = BarrelToSet;
+void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet) {
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;	
 }
 
-void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet) {
-	if (TurretToSet)
-		Turret = TurretToSet;
-}
 
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
@@ -52,6 +48,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 //UE_LOG(LogTemp, Warning, TEXT("Barrel pointing at %s"), *AimDirection.ToString())
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
+	if (!Barrel) return;
+
 	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
 	FRotator AimAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
@@ -59,6 +57,8 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 }
 
 void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) {
+	if (!Turret) return;
+
 	FRotator TurretRotator = Turret->GetForwardVector().Rotation();
 	FRotator AimAsRotator = AimDirection.Rotation();
 

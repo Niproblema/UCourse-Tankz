@@ -2,6 +2,7 @@
 
 #include "TankPlayerController.h"
 #include "Tank.h"
+#include "TankAimingComponent.h"
 
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
@@ -12,8 +13,14 @@ void ATankPlayerController::BeginPlay() {
 	}
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("PlayerControler BeginPlay NO TANK CONTROLLED!"))
+			return;
 	}
-
+	UTankAimingComponent * AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+	if (AimingComponent) {
+		FoundAimingComponent(AimingComponent);
+	}
+	else
+		UE_LOG(LogTemp, Error, TEXT("PlayerControler can't find aimingComponent at BeginPlay()"))
 }
 
 void ATankPlayerController::Tick(float DeltaTime) {
@@ -32,7 +39,7 @@ void ATankPlayerController::AimTowardsCrosshair() {
 	if (!GetControlledTank())return;
 	FVector TargetingForLocation; //OUT Parameter
 	if (GetSightRayHitLocation(TargetingForLocation)) {
-		GetControlledTank()->AimAt(TargetingForLocation);		
+		GetControlledTank()->AimAt(TargetingForLocation);
 	}
 }
 
@@ -50,7 +57,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & OutHitLocation) con
 			CameraPosition,
 			(CameraPosition + (WorldDirection * RayTraceDistance)),
 			ECollisionChannel::ECC_Camera
-		)){
+		)) {
 			OutHitLocation = HitResult.Location;
 			return true;
 		}
