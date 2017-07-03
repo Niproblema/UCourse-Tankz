@@ -9,6 +9,22 @@
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent() {
 	//TODO Should this tick maybe?
+	PrimaryComponentTick.bCanEverTick = true;
+}
+
+void UTankAimingComponent::BeginPlay() {
+	//Begins lel
+}
+
+void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) {
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	if (ReloadTimeS >= (FPlatformTime::Seconds() - LastFireTime)) {
+		FiringState = EFiringState::Reloading;
+	} else if (!isLocked()){
+		FiringState = EFiringState::Aiming;
+	} else {
+		FiringState = EFiringState::Locked;
+	}
 }
 
 void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet) {
@@ -33,7 +49,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation) {
 			0,
 			ESuggestProjVelocityTraceOption::DoNotTrace
 		)) {	//Found AimSolution and determined AimDirection. Next rotate barrel!		
-			FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
+			AimDirection = OutLaunchVelocity.GetSafeNormal();
 			MoveTurretTowards(AimDirection);
 			MoveBarrelTowards(AimDirection);
 		}
@@ -69,11 +85,15 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) {
 	Turret->Rotate(DeltaRotation);
 }
 
+bool UTankAimingComponent::isLocked() {
+	//TODO HitLocation == TargetTank ? return true : false; //AutoAim Ability
+	if (!ensure(Barrel)) return false;
+	FVector BarrelOrientation = Barrel->GetForwardVector();
+	return BarrelOrientation.Equals(AimDirection, 0.01);
+}
+
 void UTankAimingComponent::Shoot() {
-	bool isReloaded = ReloadTimeS <= (FPlatformTime::Seconds() - LastFireTime);
-
-	if (!ensure(Barrel && ProjectileBP) || !isReloaded) return;
-
+	if ((FiringState == EFiringState::Reloading)|| !ensure(Barrel && ProjectileBP)) return;
 	AProjectile * NewProjectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileBP,
 		Barrel->GetSocketLocation(FName("OutHole")),

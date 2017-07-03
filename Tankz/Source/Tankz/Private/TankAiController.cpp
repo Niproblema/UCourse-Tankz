@@ -18,5 +18,5 @@ void ATankAiController::Tick(float DeltaTime) {
 	UTankAimingComponent * AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 	MoveToActor(TargetTank, AcceptanceRadius);
 	AimingComponent->AimAt(TargetTank->GetActorLocation());
-	AimingComponent->Shoot();
+	//AimingComponent->Shoot();
 }
