@@ -4,6 +4,7 @@
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent() {
@@ -17,7 +18,7 @@ void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * T
 
 
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
+void UTankAimingComponent::AimAt(FVector HitLocation) {
 	if (Barrel && Turret) {
 		FVector OutLaunchVelocity;
 		FVector StartLocation = Barrel->GetSocketLocation(FName("OutHole"));
@@ -45,7 +46,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	}
 	return;
 }
-//UE_LOG(LogTemp, Warning, TEXT("Barrel pointing at %s"), *AimDirection.ToString())
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 	if (!Barrel) return;
@@ -67,4 +67,18 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) {
 	DeltaRotation = DeltaRotation > 180 ? DeltaRotation - 360 : DeltaRotation;
 
 	Turret->Rotate(DeltaRotation);
+}
+
+void UTankAimingComponent::Shoot() {
+	bool isReloaded = ReloadTimeS <= (FPlatformTime::Seconds() - LastFireTime);
+
+	if (!ensure(Barrel && ProjectileBP) || !isReloaded) return;
+
+	AProjectile * NewProjectile = GetWorld()->SpawnActor<AProjectile>(
+		ProjectileBP,
+		Barrel->GetSocketLocation(FName("OutHole")),
+		Barrel->GetForwardVector().Rotation()
+		);
+	LastFireTime = FPlatformTime::Seconds();
+	NewProjectile->LaunchProjectile(LaunchSpeed);
 }

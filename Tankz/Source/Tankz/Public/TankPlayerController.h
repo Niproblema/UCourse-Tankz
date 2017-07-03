@@ -7,8 +7,6 @@
 #include "GameFramework/Actor.h"
 #include "TankPlayerController.generated.h" //Must be last include
 
-
-class ATank;
 class UTankAimingComponent;
 
 UCLASS()
@@ -22,13 +20,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-	UFUNCTION(BlueprintCallable, Category = Setup)
-		ATank * GetControlledTank() const;
 	UFUNCTION(BlueprintImplementableEvent, Category = Setup)
 		void FoundAimingComponent(UTankAimingComponent * AimCompRef);
 
 private:
-
 	void AimTowardsCrosshair(); //Aim so shot hits the crosshair location
 	bool GetSightRayHitLocation(FVector & HitLocation) const; //Raycast though the dot. If it hits, return true. Also OutParameter
 

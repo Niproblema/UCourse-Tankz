@@ -7,7 +7,6 @@
 #include "GameFramework/Actor.h"
 #include "TankAiController.generated.h"
 
-class ATank;
 
 UCLASS()
 class TANKZ_API ATankAiController : public AAIController
@@ -19,12 +18,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	ATank * GetControlledTank() const;
-	ATank * GetPlayerTank() const;
-
-	ATank *  TargetTank;
-	ATank * ControlledTank;
-
 	UPROPERTY(EditAnywhere)
 		float RayTraceDistance = 1000000.f;
 
