@@ -18,7 +18,9 @@ void UTankAimingComponent::BeginPlay() {
 
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	if (ReloadTimeS >= (FPlatformTime::Seconds() - LastFireTime)) {
+	if (AmmoLeft <= 0) {
+		FiringState = EFiringState::OutOfAmmo;
+	}else if (ReloadTimeS >= (FPlatformTime::Seconds() - LastFireTime)) {
 		FiringState = EFiringState::Reloading;
 	} else if (!isLocked()){
 		FiringState = EFiringState::Aiming;
@@ -32,6 +34,13 @@ void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * T
 	Turret = TurretToSet;	
 }
 
+EFiringState UTankAimingComponent::GetFiringState() const {
+	return FiringState;
+}
+
+int32 UTankAimingComponent::GetAmmo() const {
+	return AmmoLeft;
+}
 
 
 void UTankAimingComponent::AimAt(FVector HitLocation) {
@@ -93,7 +102,7 @@ bool UTankAimingComponent::isLocked() {
 }
 
 void UTankAimingComponent::Shoot() {
-	if ((FiringState == EFiringState::Reloading)|| !ensure(Barrel && ProjectileBP)) return;
+	if ((FiringState == EFiringState::Reloading) || (FiringState == EFiringState::OutOfAmmo) || !ensure(Barrel && ProjectileBP)) return;
 	AProjectile * NewProjectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileBP,
 		Barrel->GetSocketLocation(FName("OutHole")),
@@ -101,4 +110,7 @@ void UTankAimingComponent::Shoot() {
 		);
 	LastFireTime = FPlatformTime::Seconds();
 	NewProjectile->LaunchProjectile(LaunchSpeed);
+	AmmoLeft--;
 }
+
+

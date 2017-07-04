@@ -48,10 +48,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & OutHitLocation) con
 			return true;
 		}
 	}
-
-	//float Tajm = GetWorld()->GetTimeSeconds();
-	//UE_LOG(LogTemp, Warning, TEXT("%f: Player crosshair deprojection failed. Aiming at sky?"), Tajm);
-
 	OutHitLocation = FVector(0);
 	return false;
 }

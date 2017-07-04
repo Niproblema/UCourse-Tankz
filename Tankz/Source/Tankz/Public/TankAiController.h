@@ -17,10 +17,12 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-private:
+protected:
 	UPROPERTY(EditAnywhere)
 		float RayTraceDistance = 1000000.f;
 
 	UPROPERTY(EditAnywhere)
 		float AcceptanceRadius = 1500;
+private:
+
 };

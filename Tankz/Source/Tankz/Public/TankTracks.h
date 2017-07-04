@@ -31,10 +31,10 @@ private:
 
 	//MaxForcePerTrack in newtons
 	UPROPERTY(EditAnywhere, Category = Setup)
-		float TrackMaxDrivingForce = 30000000;
+		float TrackMaxDrivingForce = 40000000;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
-		float DriftFactor = 100; //Higher = more Drift
+		float DriftFactor = 90; //Higher = more Drift
 
 	float CurrentThrottle = 0;
 
