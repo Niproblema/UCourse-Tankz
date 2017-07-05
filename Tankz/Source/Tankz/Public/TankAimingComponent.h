@@ -69,6 +69,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 		TSubclassOf<AProjectile> ProjectileBP;
 	double LastFireTime = FPlatformTime::Seconds();
-
-	int32 AmmoLeft = 9;
+	UPROPERTY(EditAnywhere, Category = Firing)
+	int32 AmmoLeft = 99;
 };
