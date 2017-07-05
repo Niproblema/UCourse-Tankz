@@ -7,6 +7,9 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "PhysicsEngine/RadialForceComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "GameFramework/DamageType.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -17,9 +20,6 @@ class TANKZ_API AProjectile : public AActor
 public:
 	// Sets default values for this actor's properties
 	AProjectile();
-
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	void LaunchProjectile(float LaunchSpeed);
 
@@ -33,5 +33,17 @@ private:
 		UStaticMeshComponent * CollisionMesh = nullptr;
 	UPROPERTY(VisibleAnywhere, Category = Components)
 		UParticleSystemComponent * LaunchBlast = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+		UParticleSystemComponent * ImpactBlast = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = Components)
+		URadialForceComponent * ExplosionForce = nullptr;
 
+	UPROPERTY(EditAnywhere, Category = Setup)
+		float DestroyDelay = 8;
+	UPROPERTY(EditAnywhere, Category = Setup)
+		float DamageAmount = 50;
+
+	UFUNCTION()
+		void OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit);
+	void OnTimerExpire();
 };

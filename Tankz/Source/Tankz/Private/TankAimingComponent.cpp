@@ -64,9 +64,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation) {
 		}
 		else {
 			float Tajm = GetWorld()->GetTimeSeconds();
-			UE_LOG(LogTemp, Error, TEXT("%f: SomethingWrong AimingComponent AimAt()"), Tajm);
-
-			//Do nothing for now.
+			//UE_LOG(LogTemp, Error, TEXT("%f: SomethingWrong AimingComponent AimAt()"), Tajm);
+			//Means that no solution to target has been found!
 		}
 	}
 	return;
