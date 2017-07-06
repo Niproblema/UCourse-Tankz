@@ -33,4 +33,9 @@ private:
 		float CrosshairYShare = 0.4f;
 	UPROPERTY(EditAnywhere)
 		float RayTraceDistance = 1000000.f;
+
+	virtual void SetPawn(APawn * InPawn) override;
+
+	UFUNCTION()
+		void OnPossessedTankDeath();
 };

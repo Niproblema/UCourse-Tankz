@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 #include "Tank.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+
 UCLASS()
 class TANKZ_API ATank : public APawn
 {
@@ -22,13 +24,17 @@ public:
 	UFUNCTION(BlueprintPure, Category = Health)
 	float GetHealthPercent() const;
 
+	FTankDelegate OnDeath;
+
 protected:
 
 private:
 	UPROPERTY(EditAnywhere, Category = Health)
 		int32 StartingHealth = 100;
 	UPROPERTY(VisibleAnywhere, Category = Health)
-		int32 CurrentHealth = StartingHealth;
+		int32 CurrentHealth;
+
+	virtual void BeginPlay() override;
 
 
 };

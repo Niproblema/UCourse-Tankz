@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/PlayerController.h"
 #include "TankAiController.generated.h"
 
 
@@ -24,5 +25,12 @@ protected:
 	UPROPERTY(EditAnywhere)
 		float AcceptanceRadius = 1500;
 private:
+
+	virtual void SetPawn(APawn * InPawn) override;
+	
+	UFUNCTION()
+		void OnPossessedTankDeath();
+
+
 
 };

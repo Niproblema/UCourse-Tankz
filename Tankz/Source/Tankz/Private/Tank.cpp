@@ -8,14 +8,20 @@ ATank::ATank() {
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void ATank::BeginPlay() {
+	Super::BeginPlay();
+	CurrentHealth = StartingHealth;
+}
+
 float ATank::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser) {
 	float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	int32 DamageToApply = FMath::Clamp(FPlatformMath::RoundToInt(ActualDamage), 0, CurrentHealth);
-	UE_LOG(LogTemp, Warning, TEXT("TOOK %d DAMAGE"), DamageToApply);
+	//UE_LOG(LogTemp, Warning, TEXT("TOOK %d DAMAGE"), DamageToApply);
 
 	CurrentHealth -= DamageToApply;
 	if (CurrentHealth <= 0) {
-		UE_LOG(LogTemp, Warning, TEXT("TANK DEDD"), );
+		OnDeath.Broadcast();
+		//UE_LOG(LogTemp, Warning, TEXT("TANK DEDD"), );
 	}
 	return DamageToApply;
 }
