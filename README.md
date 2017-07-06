@@ -17,4 +17,5 @@ Tank smoke particle has a gap shortli after firing?
 Tank projectile PlayerDamage should decrease with distance
 AI looks for controllers other than just player.
 Bad fps when depossessing PlayerTank. Could be HealthBars or GroundShaking
+PlayerUI could use more information
 Game a bit too hard :D
