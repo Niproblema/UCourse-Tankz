@@ -6,5 +6,6 @@ Features driving a tank, getting shot at by AI tanks and turrents and more.  <br
 ![Sample gameplay](TankzGameplay.png)
   <br>
 <h2>TODOs</h2>
-![todos](./TODOs.txt)
+
+[todos](TODOs.txt)
 
